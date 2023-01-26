@@ -17,6 +17,11 @@ router.put('/:id',[
     check('rol').custom(esRoleValido),
     validarCampos
 ],usuariosPut)
+router.delete('/:id',[
+    check('id','No es un id valido').isMongoId(),
+    check('id').custom(idExiste),
+    validarCampos
+], usuariosDelete)
 router.post('/',[
     check('nombre', 'EL nombre es obligatorio').not().isEmpty(),
     check('password', 'EL password es obligatorio y debe tener mas de 6 letras').isLength({min:6}),
@@ -25,7 +30,6 @@ router.post('/',[
     check('rol').custom(esRoleValido),
     validarCampos
 ], usuariosPost)
-router.delete('/:id', usuariosDelete)
 router.patch('/', usuariosPatch)
 
 module.exports = router
